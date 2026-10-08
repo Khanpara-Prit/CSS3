@@ -1,0 +1,2402 @@
+/*
+================================================================================
+CSS3 COMPLETE BEGINNER → ADVANCED REFERENCE
+================================================================================
+
+Purpose:
+- Complete CSS reference for learning and practical development.
+- Organized from fundamentals to advanced CSS.
+- Every section contains explanations in comments and usable examples.
+- You can copy individual sections into your projects.
+
+COURSE:
+01 Fundamentals
+02 Selectors & Specificity
+03 Colors, Units & Typography
+04 Box Model
+05 Display & Position
+06 Flexbox
+07 CSS Grid
+08 Responsive CSS
+09 Backgrounds & Images
+10 Forms & UI
+11 Transitions, Transforms & Animations
+12 Modern CSS
+13 Advanced CSS
+14 Real-World Project Architecture
+
+IMPORTANT:
+This file is intentionally educational. Some selectors/classes are examples.
+Not every rule should be applied globally in a production project.
+================================================================================
+*/
+
+
+/* ============================================================================
+   00 — PROFESSIONAL RESET / BASE
+   ============================================================================ */
+
+/*
+The universal selector targets every element.
+
+box-sizing: border-box means:
+declared width/height includes content + padding + border.
+This makes sizing much easier to reason about.
+*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/*
+Remove default body margin.
+*/
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+/*
+Images should normally never overflow their containers.
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/*
+Form controls inherit the page font instead of using inconsistent browser fonts.
+*/
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+/*
+Improve text wrapping for long words/URLs.
+*/
+body {
+    overflow-wrap: break-word;
+}
+
+
+/* ============================================================================
+   LESSON 1 — CSS FUNDAMENTALS
+   ============================================================================ */
+
+/*
+CSS syntax:
+
+selector {
+    property: value;
+}
+
+Example:
+*/
+.lesson1-heading {
+    color: #2563eb;
+    font-size: 2rem;
+}
+
+/*
+INLINE CSS:
+    <p style="color:red">
+
+INTERNAL CSS:
+    <style> ... </style>
+
+EXTERNAL CSS:
+    <link rel="stylesheet" href="style.css">
+
+External CSS is normally preferred for real projects.
+*/
+
+/* CSS comments look like:
+   /* comment */
+*/
+
+/* Element selector */
+.lesson1 p {
+    color: #374151;
+}
+
+/* Class selector */
+.lesson1 .card {
+    padding: 1rem;
+}
+
+/* ID selector */
+#lesson1-example {
+    color: #dc2626;
+}
+
+/* Universal selector */
+.lesson1 * {
+    /* Example only. Avoid unnecessary global rules in real projects. */
+}
+
+/* Grouping selectors */
+.lesson1 h1,
+.lesson1 h2,
+.lesson1 h3 {
+    line-height: 1.2;
+}
+
+
+/* ============================================================================
+   LESSON 2 — SELECTORS & SPECIFICITY
+   ============================================================================ */
+
+/* Element selector */
+.lesson2 p {
+    color: #374151;
+}
+
+/* Class selector */
+.lesson2 .text {
+    color: #2563eb;
+}
+
+/* ID selector */
+#lesson2-title {
+    color: #dc2626;
+}
+
+/* Multiple classes:
+   .button.primary means the SAME element has both classes.
+*/
+.lesson2 .button.primary {
+    background: #2563eb;
+    color: white;
+}
+
+/* Descendant selector:
+   Any p somewhere inside .card.
+*/
+.lesson2 .card p {
+    color: #4b5563;
+}
+
+/* Child selector:
+   Only direct p children.
+*/
+.lesson2 .card > p {
+    margin-block: 1rem;
+}
+
+/* Adjacent sibling:
+   p immediately after h2.
+*/
+.lesson2 h2 + p {
+    margin-top: 0;
+}
+
+/* General sibling:
+   Any p after h2 at the same parent level.
+*/
+.lesson2 h2 ~ p {
+    color: #6b7280;
+}
+
+/* Attribute selectors */
+.lesson2 input[type="text"] {
+    border: 1px solid #d1d5db;
+}
+
+.lesson2 input[required] {
+    border-color: #f59e0b;
+}
+
+.lesson2 a[href^="https"] {
+    color: #16a34a;
+}
+
+.lesson2 a[href$=".pdf"] {
+    color: #dc2626;
+}
+
+.lesson2 a[href*="github"] {
+    font-weight: 700;
+}
+
+/* Pseudo-classes */
+.lesson2 button:hover {
+    background: #1d4ed8;
+}
+
+.lesson2 button:active {
+    transform: translateY(1px);
+}
+
+.lesson2 input:focus {
+    border-color: #2563eb;
+}
+
+.lesson2 input:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 25%);
+    outline-offset: 2px;
+}
+
+.lesson2 button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.lesson2 input:checked {
+    accent-color: #2563eb;
+}
+
+.lesson2 li:first-child {
+    font-weight: 700;
+}
+
+.lesson2 li:last-child {
+    margin-bottom: 0;
+}
+
+.lesson2 li:nth-child(2) {
+    color: #7c3aed;
+}
+
+.lesson2 li:nth-child(odd) {
+    background: #f9fafb;
+}
+
+/*
+:not() excludes matching elements.
+*/
+.lesson2 button:not(.primary) {
+    background: #6b7280;
+}
+
+/*
+:is() groups selectors.
+*/
+.lesson2 :is(h1, h2, h3) {
+    margin-block-start: 0;
+}
+
+/*
+:where() also groups selectors, but contributes ZERO specificity.
+*/
+.lesson2 :where(h1, h2, h3) {
+    font-family: inherit;
+}
+
+/*
+:has() selects an element based on its descendants/relative selector.
+*/
+.lesson2 .card:has(img) {
+    border: 1px solid #dbeafe;
+}
+
+/* Pseudo-elements */
+.lesson2 .decorated::before {
+    content: "★";
+    margin-inline-end: 0.5rem;
+}
+
+.lesson2 .decorated::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: currentColor;
+}
+
+.lesson2 p::first-letter {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.lesson2 p::first-line {
+    font-weight: 600;
+}
+
+.lesson2 ::selection {
+    background: #bfdbfe;
+    color: #111827;
+}
+
+/*
+SPECIFICITY MENTAL MODEL
+
+Inline
+  ↓
+ID
+  ↓
+Class / Attribute / Pseudo-class
+  ↓
+Element / Pseudo-element
+  ↓
+Universal
+
+Example:
+#header .nav a
+= 1 ID + 1 class + 1 element
+
+!important should be avoided unless there is a specific architectural reason.
+*/
+
+
+/* ============================================================================
+   LESSON 3 — COLORS, UNITS & TYPOGRAPHY
+   ============================================================================ */
+
+/* CSS custom properties / design tokens */
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-secondary: #7c3aed;
+    --color-success: #16a34a;
+    --color-danger: #dc2626;
+    --color-warning: #f59e0b;
+
+    --color-text: #111827;
+    --color-text-muted: #6b7280;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f9fafb;
+    --color-border: #e5e7eb;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+
+    --radius-sm: 0.375rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-full: 999px;
+
+    --shadow-sm: 0 2px 8px rgb(0 0 0 / 8%);
+    --shadow-md: 0 10px 30px rgb(0 0 0 / 10%);
+    --shadow-lg: 0 20px 50px rgb(0 0 0 / 15%);
+}
+
+/* Named colors */
+.lesson3-named-color {
+    color: tomato;
+}
+
+/* HEX */
+.lesson3-hex {
+    color: #2563eb;
+}
+
+/* HEX shorthand */
+.lesson3-hex-short {
+    color: #fff;
+}
+
+/* RGB */
+.lesson3-rgb {
+    color: rgb(37 99 235);
+}
+
+/* RGB with alpha */
+.lesson3-rgba {
+    color: rgb(37 99 235 / 50%);
+}
+
+/* HSL */
+.lesson3-hsl {
+    color: hsl(221 83% 53%);
+}
+
+/* Modern OKLCH */
+.lesson3-oklch {
+    color: oklch(60% 0.2 250);
+}
+
+/*
+UNITS
+
+px  = CSS pixel
+%   = relative percentage
+rem = root font-size relative
+em  = current/relevant font-size relative
+vw  = viewport width
+vh  = viewport height
+svh = small viewport height
+lvh = large viewport height
+dvh = dynamic viewport height
+ch  = width of "0" glyph in current font
+
+Prefer relative units when appropriate for responsive design.
+*/
+
+.lesson3-px {
+    padding: 16px;
+}
+
+.lesson3-percent {
+    width: 80%;
+}
+
+.lesson3-rem {
+    padding: 2rem;
+}
+
+.lesson3-em {
+    padding: 1em;
+}
+
+.lesson3-vw {
+    width: 50vw;
+}
+
+.lesson3-vh {
+    min-height: 100vh;
+}
+
+.lesson3-dvh {
+    min-height: 100dvh;
+}
+
+/* Font family */
+.lesson3-body {
+    font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+/* Font size */
+.lesson3-title {
+    font-size: 3rem;
+}
+
+/* Responsive font size */
+.lesson3-responsive-title {
+    font-size: clamp(2rem, 5vw, 5rem);
+}
+
+/* Weight */
+.lesson3-bold {
+    font-weight: 700;
+}
+
+/* Style */
+.lesson3-italic {
+    font-style: italic;
+}
+
+/* Line height */
+.lesson3-paragraph {
+    line-height: 1.7;
+}
+
+/* Letter spacing */
+.lesson3-tight-title {
+    letter-spacing: -0.02em;
+}
+
+/* Alignment */
+.lesson3-center {
+    text-align: center;
+}
+
+/* Transform */
+.lesson3-uppercase {
+    text-transform: uppercase;
+}
+
+/* Decoration */
+.lesson3-underline {
+    text-decoration: underline;
+}
+
+/* Prevent wrapping */
+.lesson3-nowrap {
+    white-space: nowrap;
+}
+
+/* Ellipsis */
+.lesson3-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Readable text width */
+.lesson3-readable {
+    max-width: 65ch;
+}
+
+
+/* ============================================================================
+   LESSON 4 — BOX MODEL
+   ============================================================================ */
+
+/*
+Box model:
+
+        MARGIN
+    ┌───────────────┐
+    │    BORDER     │
+    │  ┌─────────┐  │
+    │  │ PADDING │  │
+    │  │ CONTENT │  │
+    │  └─────────┘  │
+    └───────────────┘
+*/
+
+.lesson4-box {
+    width: 300px;
+    padding: 20px;
+    border: 5px solid #111827;
+    margin: 20px;
+}
+
+/* Directional properties */
+.lesson4-directional {
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    margin-left: 40px;
+
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    padding-left: 40px;
+}
+
+/* 1 value = all sides */
+.lesson4-padding-1 {
+    padding: 20px;
+}
+
+/* 2 values = vertical horizontal */
+.lesson4-padding-2 {
+    padding: 10px 20px;
+}
+
+/* 3 values = top horizontal bottom */
+.lesson4-padding-3 {
+    padding: 10px 20px 30px;
+}
+
+/* 4 values = top right bottom left */
+.lesson4-padding-4 {
+    padding: 10px 20px 30px 40px;
+}
+
+/* Logical centering */
+.lesson4-centered-container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+}
+
+/* Border */
+.lesson4-border {
+    border: 1px solid var(--color-border);
+}
+
+/* Individual border */
+.lesson4-border-top {
+    border-top: 2px solid var(--color-primary);
+}
+
+/* Rounded corners */
+.lesson4-rounded {
+    border-radius: var(--radius-md);
+}
+
+/* Circle */
+.lesson4-circle {
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+
+/* Shadow */
+.lesson4-shadow {
+    box-shadow: var(--shadow-md);
+}
+
+/* Outline */
+.lesson4-focus:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+/* Minimum / maximum sizes */
+.lesson4-size {
+    min-width: 280px;
+    max-width: 1200px;
+    min-height: 200px;
+    max-height: 800px;
+}
+
+/*
+Use gap in Flexbox/Grid for predictable spacing.
+*/
+.lesson4-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+
+/* ============================================================================
+   LESSON 5 — DISPLAY & POSITIONING
+   ============================================================================ */
+
+.lesson5-block {
+    display: block;
+}
+
+.lesson5-inline {
+    display: inline;
+}
+
+.lesson5-inline-block {
+    display: inline-block;
+    width: 200px;
+    padding: 1rem;
+}
+
+.lesson5-hidden {
+    display: none;
+}
+
+.lesson5-invisible {
+    visibility: hidden;
+}
+
+/* Normal positioning */
+.lesson5-static {
+    position: static;
+}
+
+/*
+Relative:
+- remains in normal flow
+- can be moved with offsets
+- commonly establishes a positioning context for absolute children
+*/
+.lesson5-relative {
+    position: relative;
+}
+
+/*
+Absolute:
+- removed from normal flow
+- positioned relative to its containing block
+*/
+.lesson5-card {
+    position: relative;
+}
+
+.lesson5-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+
+    background: var(--color-danger);
+    color: white;
+}
+
+/* Absolute centering */
+.lesson5-absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Fixed UI */
+.lesson5-floating-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+}
+
+/* Sticky header */
+.lesson5-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}
+
+/* inset shorthand */
+.lesson5-full-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+/* Overflow */
+.lesson5-overflow-hidden {
+    overflow: hidden;
+}
+
+.lesson5-overflow-auto {
+    overflow: auto;
+}
+
+.lesson5-overflow-scroll {
+    overflow: scroll;
+}
+
+/*
+Stacking contexts:
+z-index works within stacking contexts.
+A child with z-index: 999999 can still be below another stacking context
+whose parent has a lower stacking order.
+*/
+
+
+/* ============================================================================
+   LESSON 6 — FLEXBOX
+   ============================================================================ */
+
+/*
+Flexbox = one-dimensional layout.
+
+Parent:
+display: flex;
+
+Main axis:
+controlled by flex-direction.
+
+Cross axis:
+perpendicular to main axis.
+*/
+
+.lesson6-flex {
+    display: flex;
+}
+
+.lesson6-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.lesson6-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main-axis alignment */
+.lesson6-justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.lesson6-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Cross-axis alignment */
+.lesson6-align-center {
+    display: flex;
+    align-items: center;
+}
+
+/* Perfect centering */
+.lesson6-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Gap */
+.lesson6-gap {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Wrapping */
+.lesson6-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Multiple flex lines */
+.lesson6-align-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+/* Flex item sizing */
+.lesson6-grow {
+    flex-grow: 1;
+}
+
+.lesson6-shrink {
+    flex-shrink: 1;
+}
+
+.lesson6-basis {
+    flex-basis: 250px;
+}
+
+.lesson6-flex-shorthand {
+    flex: 1 1 250px;
+}
+
+/* Equal flexible cards */
+.lesson6-equal {
+    flex: 1;
+}
+
+/* Individual alignment */
+.lesson6-self {
+    align-self: flex-end;
+}
+
+/* Visual order */
+.lesson6-order {
+    order: 2;
+}
+
+/* Auto margin pushes an item */
+.lesson6-nav {
+    display: flex;
+    align-items: center;
+}
+
+.lesson6-nav-actions {
+    margin-inline-start: auto;
+}
+
+/*
+Important Flexbox fix:
+Long content can prevent shrinking.
+*/
+.lesson6-shrinkable {
+    min-width: 0;
+}
+
+/* Responsive cards with Flexbox */
+.lesson6-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.lesson6-card {
+    flex: 1 1 250px;
+}
+
+
+/* ============================================================================
+   LESSON 7 — CSS GRID
+   ============================================================================ */
+
+.lesson7-grid {
+    display: grid;
+}
+
+/* Three equal columns */
+.lesson7-three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+/* Fixed + flexible */
+.lesson7-sidebar-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 1.5rem;
+}
+
+/* Three-part layout */
+.lesson7-three-part {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+}
+
+/* Responsive cards */
+.lesson7-responsive-cards {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/*
+auto-fit:
+- collapses empty tracks and lets existing items expand.
+
+auto-fill:
+- creates as many tracks as fit, potentially leaving empty tracks.
+*/
+.lesson7-auto-fill {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(250px, 1fr));
+}
+
+/* Explicit placement */
+.lesson7-span-two {
+    grid-column: span 2;
+}
+
+.lesson7-columns-1-to-3 {
+    grid-column: 1 / 3;
+}
+
+.lesson7-row-span {
+    grid-row: span 2;
+}
+
+/* Grid areas */
+.lesson7-dashboard {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+}
+
+.lesson7-header {
+    grid-area: header;
+}
+
+.lesson7-sidebar {
+    grid-area: sidebar;
+}
+
+.lesson7-main {
+    grid-area: main;
+}
+
+.lesson7-footer {
+    grid-area: footer;
+}
+
+/* Alignment of grid items */
+.lesson7-items-center {
+    display: grid;
+    place-items: center;
+}
+
+/* Alignment of whole grid */
+.lesson7-content-center {
+    display: grid;
+    place-content: center;
+}
+
+/* Implicit rows */
+.lesson7-implicit-rows {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+}
+
+/* Auto-placement */
+.lesson7-dense {
+    display: grid;
+    grid-auto-flow: dense;
+}
+
+/* Named grid lines */
+.lesson7-named-lines {
+    display: grid;
+
+    grid-template-columns:
+        [sidebar-start] 250px
+        [sidebar-end content-start] 1fr
+        [content-end];
+}
+
+.lesson7-main-content {
+    grid-column: content-start / content-end;
+}
+
+/*
+SUBGRID
+
+When supported and appropriate, nested grid content can participate
+in the parent's grid tracks.
+*/
+.lesson7-subgrid {
+    display: grid;
+    grid-template-rows: subgrid;
+}
+
+
+/* ============================================================================
+   LESSON 8 — RESPONSIVE CSS
+   ============================================================================ */
+
+/*
+Mobile-first:
+Base styles should work for small screens.
+Then use min-width queries to progressively enhance.
+*/
+
+.lesson8-container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+}
+
+/* Responsive image */
+.lesson8-image {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsive aspect ratio */
+.lesson8-thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* Responsive type */
+.lesson8-hero-title {
+    font-size: clamp(2.25rem, 7vw, 5rem);
+}
+
+/* Responsive spacing */
+.lesson8-section {
+    padding-block: clamp(3rem, 8vw, 8rem);
+}
+
+/* Small screen base */
+.lesson8-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* Larger screen enhancement */
+@media (min-width: 900px) {
+    .lesson8-layout {
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+/* Responsive navigation */
+.lesson8-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .lesson8-nav {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* Responsive form */
+.lesson8-form-row {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 700px) {
+    .lesson8-form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/*
+Do not blindly use:
+body { overflow-x: hidden; }
+
+First identify the element causing overflow.
+*/
+
+
+/* ============================================================================
+   LESSON 9 — BACKGROUNDS & IMAGES
+   ============================================================================ */
+
+/* Background color */
+.lesson9-background {
+    background-color: #111827;
+}
+
+/* Background image */
+.lesson9-image-background {
+    background-image: url("hero.jpg");
+}
+
+/* Cover */
+.lesson9-cover {
+    background-size: cover;
+}
+
+/* Contain */
+.lesson9-contain {
+    background-size: contain;
+}
+
+/* Position */
+.lesson9-position {
+    background-position: center;
+}
+
+/* Repeat */
+.lesson9-no-repeat {
+    background-repeat: no-repeat;
+}
+
+/* Attachment */
+.lesson9-fixed-background {
+    background-attachment: fixed;
+}
+
+/* Background shorthand */
+.lesson9-hero {
+    background:
+        url("hero.jpg")
+        center / cover
+        no-repeat;
+}
+
+/* Linear gradient */
+.lesson9-linear-gradient {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+}
+
+/* Radial gradient */
+.lesson9-radial-gradient {
+    background:
+        radial-gradient(
+            circle,
+            white,
+            #dbeafe
+        );
+}
+
+/* Conic gradient */
+.lesson9-conic-gradient {
+    background:
+        conic-gradient(
+            from 0deg,
+            red,
+            yellow,
+            green,
+            blue,
+            red
+        );
+}
+
+/* Image overlay */
+.lesson9-overlay {
+    background:
+        linear-gradient(
+            rgb(0 0 0 / 50%),
+            rgb(0 0 0 / 50%)
+        ),
+        url("hero.jpg")
+        center / cover
+        no-repeat;
+}
+
+/* Multiple backgrounds */
+.lesson9-multiple-backgrounds {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgb(255 255 255 / 20%),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+}
+
+/* Object fit */
+.lesson9-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Contain */
+.lesson9-image-contain {
+    object-fit: contain;
+}
+
+/* Object position */
+.lesson9-image-position {
+    object-position: center top;
+}
+
+/* Aspect ratio */
+.lesson9-card-image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+/* Professional image card */
+.lesson9-image-card {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.lesson9-image-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+
+/* ============================================================================
+   LESSON 10 — FORMS & UI
+   ============================================================================ */
+
+/* Base form layout */
+.lesson10-form {
+    display: grid;
+    gap: 1rem;
+}
+
+/* Form group */
+.lesson10-field {
+    display: grid;
+    gap: 0.5rem;
+}
+
+/* Inputs */
+.lesson10-form input,
+.lesson10-form textarea,
+.lesson10-form select {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    background: var(--color-surface);
+    color: var(--color-text);
+
+    font: inherit;
+}
+
+/* Textarea sizing */
+.lesson10-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+/* Placeholder */
+.lesson10-form input::placeholder,
+.lesson10-form textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Focus */
+.lesson10-form input:focus-visible,
+.lesson10-form textarea:focus-visible,
+.lesson10-form select:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 25%);
+    outline-offset: 2px;
+    border-color: var(--color-primary);
+}
+
+/* Disabled */
+.lesson10-form input:disabled,
+.lesson10-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Valid / invalid */
+.lesson10-form input:valid {
+    border-color: var(--color-success);
+}
+
+.lesson10-form input:invalid {
+    border-color: var(--color-danger);
+}
+
+/*
+Use validation states thoughtfully.
+Do not show an error simply because a required field is empty before
+the user has meaningfully interacted with it.
+*/
+
+/* Checkbox / radio */
+.lesson10-form input[type="checkbox"],
+.lesson10-form input[type="radio"] {
+    accent-color: var(--color-primary);
+}
+
+/* Button */
+.lesson10-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary);
+    color: white;
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+.lesson10-button:hover {
+    background: var(--color-primary-dark);
+}
+
+.lesson10-button:active {
+    transform: translateY(1px);
+}
+
+.lesson10-button:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 30%);
+    outline-offset: 3px;
+}
+
+/* Responsive form row */
+.lesson10-form-row {
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 700px) {
+    .lesson10-form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* ============================================================================
+   LESSON 11 — TRANSITIONS, TRANSFORMS & ANIMATIONS
+   ============================================================================ */
+
+/* Transition syntax:
+transition: property duration timing-function delay;
+*/
+
+.lesson11-button {
+    transition:
+        background 200ms ease,
+        transform 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.lesson11-button:hover {
+    transform: translateY(-2px);
+}
+
+/* Translate */
+.lesson11-translate {
+    transform: translate(20px, -10px);
+}
+
+/* Scale */
+.lesson11-scale {
+    transform: scale(1.05);
+}
+
+/* Rotate */
+.lesson11-rotate {
+    transform: rotate(10deg);
+}
+
+/* Skew */
+.lesson11-skew {
+    transform: skewX(10deg);
+}
+
+/* Multiple transforms */
+.lesson11-multiple-transform {
+    transform:
+        translateY(-5px)
+        scale(1.03)
+        rotate(1deg);
+}
+
+/* Transform origin */
+.lesson11-origin {
+    transform-origin: top left;
+}
+
+/* Card hover */
+.lesson11-card {
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease,
+        opacity 200ms ease;
+}
+
+.lesson11-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Keyframes */
+@keyframes lesson11-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lesson11-fade-in {
+    animation:
+        lesson11-fade-in
+        500ms
+        ease
+        both;
+}
+
+/* Spinner */
+@keyframes lesson11-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.lesson11-spinner {
+    width: 40px;
+    aspect-ratio: 1;
+
+    border: 4px solid #dbeafe;
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+
+    animation:
+        lesson11-spin
+        1s
+        linear
+        infinite;
+}
+
+/* Pulse */
+@keyframes lesson11-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.lesson11-pulse {
+    animation:
+        lesson11-pulse
+        1.5s
+        ease-in-out
+        infinite;
+}
+
+/* Stagger */
+.lesson11-item:nth-child(1) {
+    animation-delay: 100ms;
+}
+
+.lesson11-item:nth-child(2) {
+    animation-delay: 200ms;
+}
+
+.lesson11-item:nth-child(3) {
+    animation-delay: 300ms;
+}
+
+/*
+Prefer transform and opacity for many animations.
+
+Use will-change carefully.
+*/
+.lesson11-will-change {
+    will-change: transform;
+}
+
+/*
+Accessibility:
+respect users who request reduced motion.
+*/
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* ============================================================================
+   LESSON 12 — MODERN CSS
+   ============================================================================ */
+
+/* CSS variables are already defined in :root above. */
+
+/* Fallback value */
+.lesson12-variable-fallback {
+    color: var(--missing-color, blue);
+}
+
+/* Local variable */
+.lesson12-card {
+    --card-padding: 1.5rem;
+    padding: var(--card-padding);
+}
+
+/* calc() */
+.lesson12-calc {
+    width: calc(100% - 40px);
+}
+
+/* min() */
+.lesson12-min {
+    width: min(90%, 1200px);
+}
+
+/* max() */
+.lesson12-max {
+    padding: max(2rem, 5vw);
+}
+
+/* clamp() */
+.lesson12-clamp {
+    font-size: clamp(2rem, 5vw, 5rem);
+}
+
+/* :is() */
+.lesson12-is :is(h1, h2, h3) {
+    margin-block: 0;
+}
+
+/* :where() = zero specificity */
+.lesson12-where :where(h1, h2, h3) {
+    margin-block: 0;
+}
+
+/* :not() */
+.lesson12-not button:not(.primary) {
+    background: #6b7280;
+}
+
+/* :has() */
+.lesson12-card-with-image:has(img) {
+    border: 2px solid #bfdbfe;
+}
+
+/* Invalid form group */
+.lesson12-form-group:has(input:invalid) {
+    color: var(--color-danger);
+}
+
+/* CSS nesting */
+.lesson12-nested-card {
+    padding: 1rem;
+
+    h2 {
+        margin-block: 0 0.75rem;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+/* Logical properties */
+.lesson12-logical {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    padding-block: 2rem;
+    border-inline-start: 4px solid var(--color-primary);
+}
+
+/* Logical positioning */
+.lesson12-logical-position {
+    position: absolute;
+    inset-block-start: 1rem;
+    inset-inline-end: 1rem;
+}
+
+/* Modern colors */
+.lesson12-oklch {
+    color: oklch(60% 0.2 250);
+}
+
+.lesson12-color-mix {
+    background:
+        color-mix(
+            in srgb,
+            var(--color-primary) 70%,
+            white
+        );
+}
+
+/* Feature detection */
+@supports (display: grid) {
+    .lesson12-grid-support {
+        display: grid;
+    }
+}
+
+/* Feature detection for :has */
+@supports selector(:has(*)) {
+    .lesson12-has-support:has(img) {
+        padding: 1rem;
+    }
+}
+
+/* Cascade layers */
+@layer reset, base, components, utilities;
+
+@layer reset {
+    .lesson12-layer-reset {
+        box-sizing: border-box;
+    }
+}
+
+@layer base {
+    .lesson12-layer-base {
+        color: var(--color-text);
+    }
+}
+
+@layer components {
+    .lesson12-layer-component {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+    }
+}
+
+@layer utilities {
+    .lesson12-hidden {
+        display: none;
+    }
+}
+
+/* Container query */
+.lesson12-container {
+    container-type: inline-size;
+}
+
+@container (min-width: 500px) {
+    .lesson12-container-card {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+
+/* ============================================================================
+   LESSON 13 — ADVANCED CSS
+   ============================================================================ */
+
+/*
+CASCADE
+
+Simplified mental model:
+
+1. Origin + importance
+2. Cascade layers
+3. Specificity
+4. Source order
+
+Specificity:
+- Inline styles
+- IDs
+- Classes / attributes / pseudo-classes
+- Elements / pseudo-elements
+
+:is(), :not(), and :has() take the specificity of the most specific
+selector in their argument list.
+
+:where() always has zero specificity.
+*/
+
+/* Demonstration */
+.lesson13-specificity p {
+    color: blue;
+}
+
+.lesson13-specificity .text {
+    color: green;
+}
+
+.lesson13-specificity #important-title {
+    color: red;
+}
+
+/* Inheritance */
+.lesson13-inheritance {
+    color: var(--color-text);
+    font-family: system-ui, sans-serif;
+}
+
+.lesson13-inheritance button {
+    color: inherit;
+    font: inherit;
+}
+
+/* Initial */
+.lesson13-initial {
+    color: initial;
+}
+
+/* Unset */
+.lesson13-unset {
+    color: unset;
+}
+
+/* Revert */
+.lesson13-revert {
+    all: revert;
+}
+
+/* Revert layer */
+.lesson13-revert-layer {
+    color: revert-layer;
+}
+
+/*
+STACKING CONTEXT EXAMPLE
+
+A child with a huge z-index cannot escape its parent's stacking context.
+*/
+.lesson13-stacking-parent {
+    position: relative;
+    z-index: 1;
+}
+
+.lesson13-stacking-child {
+    position: absolute;
+    z-index: 999999;
+}
+
+.lesson13-other-context {
+    position: relative;
+    z-index: 2;
+}
+
+/* Common stacking-context triggers */
+.lesson13-opacity {
+    opacity: 0.99;
+}
+
+.lesson13-transform {
+    transform: translateZ(0);
+}
+
+.lesson13-filter {
+    filter: blur(0);
+}
+
+.lesson13-isolated {
+    isolation: isolate;
+}
+
+/* Professional z-index scale */
+:root {
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-modal: 300;
+    --z-toast: 400;
+}
+
+.lesson13-dropdown {
+    position: absolute;
+    z-index: var(--z-dropdown);
+}
+
+.lesson13-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+}
+
+.lesson13-toast {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: var(--z-toast);
+}
+
+/* Containing block */
+.lesson13-card {
+    position: relative;
+}
+
+.lesson13-badge {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+}
+
+/* Advanced flex */
+.lesson13-flex {
+    display: flex;
+    gap: 1rem;
+}
+
+.lesson13-flex-item {
+    flex: 1 1 300px;
+    min-width: 0;
+}
+
+/* Advanced grid */
+.lesson13-advanced-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+    gap: 1.5rem;
+}
+
+/* Intrinsic sizing */
+.lesson13-min-content {
+    width: min-content;
+}
+
+.lesson13-max-content {
+    width: max-content;
+}
+
+.lesson13-fit-content {
+    width: fit-content(300px);
+}
+
+/* Named lines */
+.lesson13-named-grid {
+    display: grid;
+
+    grid-template-columns:
+        [sidebar-start] 250px
+        [sidebar-end content-start] minmax(0, 1fr)
+        [content-end];
+}
+
+.lesson13-content {
+    grid-column: content-start / content-end;
+}
+
+/* Subgrid */
+.lesson13-subgrid {
+    display: grid;
+    grid-template-rows: subgrid;
+}
+
+/*
+ARCHITECTURE EXAMPLE
+
+BEM:
+.block
+.block__element
+.block--modifier
+*/
+
+.lesson13-card {
+    padding: var(--space-6);
+}
+
+.lesson13-card__title {
+    margin: 0;
+}
+
+.lesson13-card__description {
+    color: var(--color-text-muted);
+}
+
+.lesson13-card__button {
+    padding: 0.75rem 1rem;
+}
+
+.lesson13-card__button--primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+
+/* ============================================================================
+   LESSON 14 — REAL-WORLD PROJECT FOUNDATION
+   ============================================================================ */
+
+/*
+A professional project can be organized conceptually like:
+
+styles/
+├── reset.css
+├── tokens.css
+├── base.css
+├── components/
+│   ├── button.css
+│   ├── card.css
+│   ├── navbar.css
+│   └── modal.css
+├── layouts/
+│   ├── header.css
+│   ├── dashboard.css
+│   └── grid.css
+└── utilities/
+    ├── spacing.css
+    └── typography.css
+
+This single-file version demonstrates the same concepts.
+*/
+
+/* Main page container */
+.project-container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
+}
+
+/* Responsive page sections */
+.project-section {
+    padding-block: clamp(3rem, 8vw, 8rem);
+}
+
+/* Hero */
+.project-hero {
+    min-height: 80dvh;
+
+    display: grid;
+    place-items: center;
+
+    padding: clamp(2rem, 5vw, 5rem);
+
+    background:
+        linear-gradient(
+            rgb(0 0 0 / 50%),
+            rgb(0 0 0 / 50%)
+        ),
+        url("hero.jpg")
+        center / cover
+        no-repeat;
+
+    color: white;
+}
+
+.project-hero__content {
+    width: min(100%, 800px);
+}
+
+.project-hero__title {
+    margin: 0;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.project-hero__description {
+    max-width: 65ch;
+    margin-block: 1.5rem;
+
+    color: rgb(255 255 255 / 85%);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+}
+
+/* CTA buttons */
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.project-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary);
+    color: white;
+
+    text-decoration: none;
+    font-weight: 600;
+
+    transition:
+        transform 180ms ease,
+        background 180ms ease;
+}
+
+.project-button:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+.project-button:focus-visible {
+    outline: 3px solid rgb(255 255 255 / 70%);
+    outline-offset: 3px;
+}
+
+/* Project grid */
+.project-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Project card */
+.project-card {
+    container-type: inline-size;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    background: var(--color-surface);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.project-card__image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.project-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    padding: var(--space-6);
+}
+
+.project-card__title {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.project-card__description {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+.project-card__actions {
+    margin-top: auto;
+    padding-top: 1rem;
+}
+
+/* Component changes based on its container */
+@container (min-width: 500px) {
+    .project-card {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+    }
+
+    .project-card__image {
+        height: 100%;
+    }
+}
+
+
+/* ============================================================================
+   ACCESSIBILITY UTILITIES
+   ============================================================================ */
+
+/*
+Screen-reader-only utility.
+
+The element remains available to assistive technology but is visually hidden.
+*/
+.sr-only {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+    border: 0;
+}
+
+/*
+Skip link.
+*/
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    padding: 0.75rem 1rem;
+
+    background: #111827;
+    color: white;
+
+    transform: translateY(-120%);
+    transition: transform 150ms ease;
+
+    z-index: var(--z-toast);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+
+/* ============================================================================
+   COMMON UTILITY CLASSES
+   ============================================================================ */
+
+.u-hidden {
+    display: none !important;
+}
+
+.u-flex {
+    display: flex;
+}
+
+.u-grid {
+    display: grid;
+}
+
+.u-center {
+    display: grid;
+    place-items: center;
+}
+
+.u-text-center {
+    text-align: center;
+}
+
+.u-w-full {
+    width: 100%;
+}
+
+.u-mx-auto {
+    margin-inline: auto;
+}
+
+.u-overflow-hidden {
+    overflow: hidden;
+}
+
+
+/* ============================================================================
+   FINAL CSS CHEAT SHEET
+   ============================================================================
+
+SELECTORS:
+    element       p {}
+    class         .card {}
+    id            #title {}
+    universal     * {}
+    descendant    .card p {}
+    child         .card > p {}
+    sibling       h2 + p {}
+    general        h2 ~ p {}
+    attribute     input[type="text"] {}
+    state         :hover :focus :checked :disabled
+    pseudo        ::before ::after ::selection
+
+BOX MODEL:
+    width
+    height
+    min-width
+    max-width
+    padding
+    margin
+    border
+    border-radius
+    box-sizing
+    box-shadow
+    outline
+
+DISPLAY:
+    block
+    inline
+    inline-block
+    flex
+    grid
+    none
+
+POSITION:
+    static
+    relative
+    absolute
+    fixed
+    sticky
+    top
+    right
+    bottom
+    left
+    inset
+    z-index
+
+FLEX:
+    flex-direction
+    justify-content
+    align-items
+    align-content
+    flex-wrap
+    gap
+    flex-grow
+    flex-shrink
+    flex-basis
+    flex
+    order
+    align-self
+
+GRID:
+    grid-template-columns
+    grid-template-rows
+    grid-template-areas
+    grid-column
+    grid-row
+    grid-area
+    grid-auto-flow
+    grid-auto-rows
+    gap
+    repeat()
+    minmax()
+    subgrid
+
+RESPONSIVE:
+    @media
+    %
+    rem
+    em
+    vw
+    vh
+    svh
+    lvh
+    dvh
+    calc()
+    min()
+    max()
+    clamp()
+
+IMAGES:
+    object-fit
+    object-position
+    aspect-ratio
+    background-image
+    background-size
+    background-position
+    background-repeat
+
+ANIMATION:
+    transition
+    transform
+    animation
+    @keyframes
+    opacity
+    cubic-bezier()
+    will-change
+    prefers-reduced-motion
+
+MODERN CSS:
+    var()
+    calc()
+    min()
+    max()
+    clamp()
+    :is()
+    :where()
+    :not()
+    :has()
+    nesting
+    logical properties
+    @supports
+    @layer
+    @container
+    oklch()
+    oklab()
+    color-mix()
+
+ADVANCED:
+    cascade
+    inheritance
+    specificity
+    stacking contexts
+    containing blocks
+    intrinsic sizing
+    min-content
+    max-content
+    fit-content()
+    subgrid
+    CSS architecture
+    BEM
+    design tokens
+    performance
+    DevTools debugging
+
+===============================================================================
+END OF CSS3 COMPLETE REFERENCE
+===============================================================================
